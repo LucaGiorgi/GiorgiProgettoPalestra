@@ -9,6 +9,10 @@ package com.mycompany.palestra;
  *
  * @author LucaGiorgi
  */
-public class Palestra {
-    
+public class Palestra 
+{
+    private void primoMetodo()
+    {
+        
+    }
 }
