@@ -11,8 +11,5 @@ package com.mycompany.palestra;
  */
 public class Palestra 
 {
-    private void primoMetodo()
-    {
-        
-    }
+    
 }
