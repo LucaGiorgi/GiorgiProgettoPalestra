@@ -96,9 +96,9 @@ public class Palestra
             if(codiceIdentificativo== clienti[i].getCodiceIdentificativo())
                 clienti[i]=null;
             else
-                return -1;
+                return 0;
         }
-                        return -2;
+                        return -1;
     }
         
     public  String visualizzaClienti(Cliente clienti)
