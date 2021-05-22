@@ -81,6 +81,7 @@ public class Palestra
         
         //se posizione libera
         clienti[posizione]=new Cliente(cliente);
+        
         return posizione;
         }
         catch(ArrayIndexOutOfBoundsException posizioneNonValida)
@@ -89,6 +90,12 @@ public class Palestra
         }
         
     }
+
+    public static void setN_MAX_CLIENTI(int N_MAX_CLIENTI)
+    {
+        Palestra.N_MAX_CLIENTI = N_MAX_CLIENTI;
+    }
+    
     public int rimuoviCliente(int codiceIdentificativo)
     {
         for(int i=0;i<getNumClienti();i++)
@@ -98,19 +105,19 @@ public class Palestra
             else
                 return 0;
         }
-                        return -1;
+                return -1;
     }
         
-    public  String visualizzaClienti(Cliente clienti)
+    public  String visualizzaClienti()
     {
         String s="";
-        if(this.getNumClienti() == 0)
+        if(getNumClienti() == 0)
         {
-            s="Nessun cliente presete";
+            s="Nessun cliente presente";
         }
-        for(int i=0;i<this.getNumClienti();i++)
+        for(int i=0;i<getNumClienti();i++)
         {
-            s=clienti.toString();
+            s+="\n"+clienti[i].toString();
         }
         return s;
     }
@@ -126,5 +133,15 @@ public class Palestra
         return -1;
     }
 
+    public int visualizzaCorsoCliente(String corso)
+    {
+        String s="";
+        for(int i=0;i>getNumClienti();i++)
+        {
+            if(corso==clienti[i].getCorso())
+                return 0;
+        }
+            return 1;
+    }
     
 }

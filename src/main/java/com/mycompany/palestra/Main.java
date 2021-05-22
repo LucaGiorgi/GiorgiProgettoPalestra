@@ -16,10 +16,10 @@ public class Main
     public static void main(String[] args)
     {
         int sceltaUtente =-1;
+        int CodiceIdentificativo=1;
         Scanner tastiera= new Scanner(System.in);
         String[] vociMenu= new String[7];
         Palestra p1 = new Palestra();
-        Cliente cliente;
         String nomeFileCSV="Palestra.txt";
         String nomeFileBinario="Palestra.bin";
         
@@ -30,43 +30,47 @@ public class Main
         vociMenu[4] = "Visualizza clienti di un determinato corso";
         vociMenu[5] = "Esporta i dati in formato CSV";
         vociMenu[6] = "Esci";
-        cliente = new Cliente();
         Menu menu= new Menu(vociMenu);
-        sceltaUtente=menu.sceltaMenu();
+        Cliente c1;
         
     do{
+        sceltaUtente=menu.sceltaMenu();
          switch(sceltaUtente)
          {
             
                 case 0:
                 {
-                    System.out.println("Codice identificativo --> ");
-                    cliente.setCodiceIdentificativo(tastiera.nextInt());
+                    String nome,cognome,corso;
+                    int giorno,mese,anno;
+                    
+                    System.out.println("INSERIMENTO NUOVO CLIENTE");
                     tastiera.nextLine();
-                    System.out.println("Cognome --> ");
-                    cliente.setCognome(tastiera.nextLine());
-                    System.out.println("Nome --> ");
-                    /*
-                    cliente.setNome(tastiera.nextLine());
-                    System.out.println("iscrizione avvenuta:");
-                    System.out.println("Anno-->");
-                    anno=tastiera.nextInt();
-                    System.out.println("Mese-->");
-                    mese=tastiera.nextInt();
-                    System.out.println("Giorno-->");
+                    System.out.println("Nome:");
+                    nome=tastiera.nextLine();
+                    System.out.println("Cognome:");
+                    cognome=tastiera.nextLine();
+                    System.out.println("Corso:");
+                    corso=tastiera.nextLine();
+                    System.out.println("DATA ISCRIZIONE");
+                    System.out.println("Giorno:");
                     giorno=tastiera.nextInt();
-                    System.out.println("Corso --> ");
-                    */
-                    cliente.setCorso(tastiera.nextLine());
-                    p1.setCliente(cliente, sceltaUtente);
-                    System.out.println("inserimento avvenuto correttamente");
+                    System.out.println("Mese:");
+                    mese=tastiera.nextInt();
+                    System.out.println("Anno:");
+                    anno=tastiera.nextInt();
+                    System.out.println("premi un pulsante per continuare.!");
+                    tastiera.nextLine();
+                    c1=new Cliente(CodiceIdentificativo,nome,cognome,corso,giorno,mese,anno);
+                    p1.setCliente(c1, CodiceIdentificativo);
+                    CodiceIdentificativo++;
                     break;
                 }
                 case 1:
                 {
+                    int codiceDaEliminare;
                     System.out.println("Inserire il codice indentificativo:");
-                    cliente.setCodiceIdentificativo(tastiera.nextInt());
-                    if(p1.rimuoviCliente(sceltaUtente)==0)
+                    codiceDaEliminare=tastiera.nextInt();
+                    if(p1.rimuoviCliente(codiceDaEliminare)==0)
                         System.out.println("cliente rimosso correttamente");
                     if(p1.rimuoviCliente(sceltaUtente)==-1)
                         System.out.println("cliente non trovato");
@@ -76,22 +80,28 @@ public class Main
                 }
                 case 2:
                 {
-                    System.out.println(p1.visualizzaClienti(cliente));
+                    System.out.println(p1.visualizzaClienti());
                     System.out.println("premi un pulsante per continuare.!");
                     tastiera.nextLine();
                     break;
                 }
                 case 3:
                 {
-                    
+                    System.out.println("premi un pulsante per continuare.!");
+                    tastiera.nextLine();
+                    break;
                 }
                 case 4:
                 {
-                    
+                    System.out.println("premi un pulsante per continuare.!");
+                    tastiera.nextLine();
+                    break;
                 }
                 case 5:
                 {
-                    
+                    System.out.println("premi un pulsante per continuare.!");
+                    tastiera.nextLine();
+                    break;
                 }
                 case 6:
                 {
@@ -99,7 +109,7 @@ public class Main
                     break;
                 }
             }
-         }while(sceltaUtente!=0);      
+         }while(sceltaUtente!=6);      
     
     }
 }
