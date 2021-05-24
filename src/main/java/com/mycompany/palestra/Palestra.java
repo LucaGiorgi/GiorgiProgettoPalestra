@@ -5,6 +5,11 @@
  */
 package com.mycompany.palestra;
 
+import com.mycompany._progettolibreria.Scaffale;
+import eccezioni.*;
+import file.fileExeption;
+import file.TextFile;
+import java.io.*;
 /**
  *
  * @author LucaGiorgi
@@ -96,18 +101,30 @@ public class Palestra
         Palestra.N_MAX_CLIENTI = N_MAX_CLIENTI;
     }
     
-    public int rimuoviCliente(int codiceIdentificativo)
+    public int rimuoviCliente(int codiceDaEliminare)
     {
         for(int i=0;i<getNumClienti();i++)
         {
-            if(codiceIdentificativo== clienti[i].getCodiceIdentificativo())
-                clienti[i]=null;
-            else
-                return 0;
+            if(clienti[i]!=null)
+            {
+                if(clienti[i].getCodiceIdentificativo()==codiceDaEliminare)
+                {
+                    clienti[i]=null;
+                    aggiornaPosizioneClienti(i);
+                    return 0;
+                }
+            }
         }
-                return -1;
+        return -1;
     }
-        
+    public void aggiornaPosizioneClienti(int posizione)
+    {
+        for (int i=posizione;i<getNumClienti();i++)
+        {
+            clienti[posizione]=clienti[posizione+1];
+        }
+    }        
+            
     public  String visualizzaClienti()
     {
         String s="";
@@ -117,31 +134,87 @@ public class Palestra
         }
         for(int i=0;i<getNumClienti();i++)
         {
+            
             s+="\n"+clienti[i].toString();
         }
         return s;
     }
     
-    public  int visualizzaCliente(String Cognome, String Nome)
+    public  String visualizzaCliente(String cognome, String nome)
     {
         String s="";
         for(int i=0;i<getNumClienti();i++)
         {
-            if(Cognome==clienti[i].getCognome() && Nome==clienti[i].getNome())
-                return 0; 
+            if(clienti[i].getCognome().compareToIgnoreCase(cognome)==0 && clienti[i].getNome().compareToIgnoreCase(nome)==0)
+            {
+                return clienti[i].toString(); 
+            }
+            else
+            {
+                s="Cliente non trovato!";
+            }
         }
-        return -1;
+        return s;
     }
 
-    public int visualizzaCorsoCliente(String corso)
+    public String visualizzaCorsoCliente(String corso)
     {
         String s="";
-        for(int i=0;i>getNumClienti();i++)
+        for(int i=0;i<getNumClienti();i++)
         {
-            if(corso==clienti[i].getCorso())
-                return 0;
+            if(clienti[i].getCorso().compareToIgnoreCase(corso)==0)
+            {
+                s+=clienti[i].toString(); 
+            }
+            else
+            {
+                s="nessun cliente con quel corso";
+            }
         }
-            return 1;
+        return s;
     }
-    
+    //salva dati csv
+    public void esportaClientiCsv(String nomeFile) throws IOException, EccezionePosizioneNonValida, fileExeption
+    {
+      TextFile f1= new TextFile(nomeFile, 'W');
+      String rigaDaScrivere="";
+      Cliente c;
+      for(int i=0;i<getNumClienti();i++)
+      {
+              if(getCliente(i)!=null)
+              {
+                  c=getCliente(i);
+                  rigaDaScrivere=i+"; "+c.getNome()+"; "+c.getCognome()+"; "+c.getAnno()+"; "+c.getMese()+"; "+c.getGiorno()+"; ";
+                  
+                  try 
+                  {
+                      f1.toFile(rigaDaScrivere);
+                  } 
+                  catch (fileExeption ex) 
+                  {
+                      f1.close();
+                      throw new fileExeption("Errore in scrittura!");
+                  }
+              }
+          
+      }
+      f1.close();      
+   }
+      public  Cliente caricaClienti(String nomeFile) throws FileNotFoundException, IOException, fileExeption 
+  {
+      FileInputStream f1=new FileInputStream(nomeFile);
+      ObjectInputStream inputStream=new ObjectInputStream(f1);
+      Scaffale s;
+       try 
+       {
+           s=(Cliente)inputStream.readObject();
+           inputStream.close();
+            return s;
+       } 
+       catch (ClassNotFoundException ex) 
+       {
+          inputStream.close();
+          throw new fileExeption("Errore nella lettura del file");
+       }
+  }
 }

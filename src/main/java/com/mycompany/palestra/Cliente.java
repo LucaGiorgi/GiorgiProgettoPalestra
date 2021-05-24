@@ -31,10 +31,10 @@ public class Cliente
     
     public Cliente (Cliente c1)
     {
-        this.codiceIdentificativo = getCodiceIdentificativo();
-        this.nome = getNome();
-        this.cognome = getCognome();
-        this.corso = getCorso();
+        this.codiceIdentificativo = c1.getCodiceIdentificativo();
+        this.nome = c1.getNome();
+        this.cognome = c1.getCognome();
+        this.corso = c1.getCorso();
         this.dataIscrizione = LocalDate.from(c1.getDataIscrizione());
     }
     public Cliente ()
