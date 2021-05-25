@@ -37,10 +37,10 @@ public class Main
         vociMenu[6] = "Esporta i dati in formato CSV";
         Menu menu= new Menu(vociMenu);
         Cliente c1;
-                try 
+        try 
         {
             
-            c1=c1.caricaCliente(nomeFileBinario);
+            p1=p1.caricaClienti(nomeFileBinario);
             System.out.println("Dati caricati correttamente");
         }
         catch (IOException ex) 
@@ -140,7 +140,7 @@ public class Main
                     break;
                 }
             }
-         }while(sceltaUtente!=6);      
+         }while(sceltaUtente!=0);      
     
     }
 }

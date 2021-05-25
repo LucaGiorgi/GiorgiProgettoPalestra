@@ -200,16 +200,25 @@ public class Palestra
       }
       f1.close();      
    }
-      public  Cliente caricaClienti(String nomeFile) throws FileNotFoundException, IOException, fileExeption 
+      public void salvaClienti(String nomeFile) throws FileNotFoundException, IOException
+  {
+      FileOutputStream f1=new FileOutputStream(nomeFile);
+      ObjectOutputStream outputStream=new ObjectOutputStream(f1);
+      outputStream.writeObject(this);
+      outputStream.flush();
+      outputStream.close();
+  }
+  
+      public  Palestra caricaClienti(String nomeFile) throws FileNotFoundException, IOException, fileExeption 
   {
       FileInputStream f1=new FileInputStream(nomeFile);
       ObjectInputStream inputStream=new ObjectInputStream(f1);
-      Scaffale s;
+      Palestra p;
        try 
        {
-           s=(Cliente)inputStream.readObject();
+           p=(Palestra)inputStream.readObject();
            inputStream.close();
-            return s;
+            return p;
        } 
        catch (ClassNotFoundException ex) 
        {
