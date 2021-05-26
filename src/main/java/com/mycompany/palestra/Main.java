@@ -36,22 +36,7 @@ public class Main
         vociMenu[5] = "Visualizza clienti di un determinato corso";
         vociMenu[6] = "Esporta i dati in formato CSV";
         Menu menu= new Menu(vociMenu);
-        Cliente c1;
-        try 
-        {
-            
-            p1=p1.caricaClienti(nomeFileBinario);
-            System.out.println("Dati caricati correttamente");
-        }
-        catch (IOException ex) 
-        {
-            System.out.println("Impossibile accedere al file. I dati non sono stati caricati");
-        }
-        catch (fileExeption ex) 
-        {
-            System.out.println("Errore di lettura dal file. I dati non sono stati caricati");
-        }
-        
+        Cliente c1;       
         
     do{
         sceltaUtente=menu.sceltaMenu();
@@ -128,8 +113,7 @@ public class Main
                 }
                 case 6:
                 {
-                    
-                    System.out.println("esportazione avvenuta correttamente!");
+                    //csv
                     System.out.println("premi un pulsante per continuare.!");
                     tastiera.nextLine();
                     break;

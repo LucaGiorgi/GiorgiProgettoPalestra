@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 package com.mycompany.palestra;
-
-import com.mycompany._progettolibreria.Scaffale;
 import eccezioni.*;
 import file.fileExeption;
 import file.TextFile;
 import java.io.*;
+
 /**
- *
+ * 
  * @author LucaGiorgi
+ * Classe Palestra, array di clienti
  */
 public class Palestra 
 {
@@ -23,7 +23,11 @@ public class Palestra
      {
        clienti = new Cliente[N_MAX_CLIENTI];
      }
-
+    /**
+    *costruttore
+    * param elencoClienti, array di clienti
+    * 
+    **/
     public Palestra(Cliente elencoClienti[])
     {
         clienti=new Cliente[N_MAX_CLIENTI];
@@ -44,16 +48,30 @@ public class Palestra
             }
         }
     }
+    /**
+     * getClienti, restituisce il valore di clienti
+     * return clienti
+     * 
+     **/
     public Cliente[] getClienti()
     {
         return clienti;
     }
-
+    /**
+     * getN_MAX_CLIENTI, restituisce il valore del numero massimo di clienti
+     * registrabili nell'array
+     * return getN_MAX_CLIENTI
+     * 
+     **/
     public static int getN_MAX_CLIENTI() 
     {
         return N_MAX_CLIENTI;
     }
-    
+    /**
+     * getNumClienti, restituisce un contatore c, si incrementi ogni qualvolta si aggiunge un cliente in palestra
+     * return c
+     * 
+     **/
     public int getNumClienti()
     {
         int c=0;
@@ -64,7 +82,13 @@ public class Palestra
         }
         return c;
     }
-    
+    /**
+     * getCliente
+     * param posizione, posizione cliente
+     * return clienti[], se va tutto ok
+     * return null 
+     * 
+     **/
     public Cliente getCliente(int posizione)
     {
         if(posizione<0 || posizione>=getN_MAX_CLIENTI())
@@ -73,7 +97,14 @@ public class Palestra
             return null;
         return clienti[posizione];
     }
-    
+    /**
+     * setCliente, inserimento nuovo cliente
+     * param Cliente 
+     * param posizione
+     * return -1 se la posizione non è valida
+     * return -2 se posizone occupata 
+     * return 0, ok cliente inserito
+     **/
     public int setCliente (Cliente cliente, int posizione)
     {
         if (posizione<0 || posizione>getNumClienti())
@@ -95,12 +126,22 @@ public class Palestra
         }
         
     }
-
+    /**
+     * setN_MAX_CLIENTI
+     * non restituisce niente
+     * 
+     * param N_MAX_CLIENTI 
+     */
     public static void setN_MAX_CLIENTI(int N_MAX_CLIENTI)
     {
         Palestra.N_MAX_CLIENTI = N_MAX_CLIENTI;
     }
-    
+    /**
+     * rimumoviCliente, rimuove un cliente in base al codiceIdentificativo
+     * param codiceDaEliminare
+     * return 0, se cliente rimosso correttamente
+     * return -1, se cliente non rimosso correttamente
+     */
     public int rimuoviCliente(int codiceDaEliminare)
     {
         for(int i=0;i<getNumClienti();i++)
@@ -117,6 +158,10 @@ public class Palestra
         }
         return -1;
     }
+    /**
+     * aggiornaPosizioneCliente, aggiorna la posizione di un cliente
+     * param posizione 
+     */
     public void aggiornaPosizioneClienti(int posizione)
     {
         for (int i=posizione;i<getNumClienti();i++)
@@ -124,9 +169,14 @@ public class Palestra
             clienti[posizione]=clienti[posizione+1];
         }
     }        
-            
+    /**
+     * visualizzaClienti: visualizza tutti i clienti dell'array
+     *
+     * return, s (stringa) 
+     */        
     public  String visualizzaClienti()
     {
+
         String s="";
         if(getNumClienti() == 0)
         {
@@ -136,10 +186,15 @@ public class Palestra
         {
             
             s+="\n"+clienti[i].toString();
-        }
+        }           
         return s;
     }
-    
+    /**
+     * visualizzaCliente, visualizza un cliente con un determinato nome e cognome
+     * param cognome
+     * param nome
+     * return s (stringa)
+     */
     public  String visualizzaCliente(String cognome, String nome)
     {
         String s="";
@@ -156,7 +211,12 @@ public class Palestra
         }
         return s;
     }
-
+    /**
+     * visualizzaCorsoCliente, visualizza i clienti iscritti ad un determinato coros
+     * param corso
+     *
+     * return s (stringa)
+     */
     public String visualizzaCorsoCliente(String corso)
     {
         String s="";
@@ -174,56 +234,4 @@ public class Palestra
         return s;
     }
     //salva dati csv
-    public void esportaClientiCsv(String nomeFile) throws IOException, EccezionePosizioneNonValida, fileExeption
-    {
-      TextFile f1= new TextFile(nomeFile, 'W');
-      String rigaDaScrivere="";
-      Cliente c;
-      for(int i=0;i<getNumClienti();i++)
-      {
-              if(getCliente(i)!=null)
-              {
-                  c=getCliente(i);
-                  rigaDaScrivere=i+"; "+c.getNome()+"; "+c.getCognome()+"; "+c.getAnno()+"; "+c.getMese()+"; "+c.getGiorno()+"; ";
-                  
-                  try 
-                  {
-                      f1.toFile(rigaDaScrivere);
-                  } 
-                  catch (fileExeption ex) 
-                  {
-                      f1.close();
-                      throw new fileExeption("Errore in scrittura!");
-                  }
-              }
-          
-      }
-      f1.close();      
-   }
-      public void salvaClienti(String nomeFile) throws FileNotFoundException, IOException
-  {
-      FileOutputStream f1=new FileOutputStream(nomeFile);
-      ObjectOutputStream outputStream=new ObjectOutputStream(f1);
-      outputStream.writeObject(this);
-      outputStream.flush();
-      outputStream.close();
-  }
-  
-      public  Palestra caricaClienti(String nomeFile) throws FileNotFoundException, IOException, fileExeption 
-  {
-      FileInputStream f1=new FileInputStream(nomeFile);
-      ObjectInputStream inputStream=new ObjectInputStream(f1);
-      Palestra p;
-       try 
-       {
-           p=(Palestra)inputStream.readObject();
-           inputStream.close();
-            return p;
-       } 
-       catch (ClassNotFoundException ex) 
-       {
-          inputStream.close();
-          throw new fileExeption("Errore nella lettura del file");
-       }
-  }
 }
