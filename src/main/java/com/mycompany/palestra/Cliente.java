@@ -209,5 +209,11 @@ public class Cliente
         s= "Codice identificativo: "+getCodiceIdentificativo()+";\n"+"Nome: "+getNome()+";\n"+"Cognome: "+getCognome()+";\n"+"Corso: "+getCorso()+";\n"+"Data Iscrizione: "+getDataIscrizione()+";\n";
         return s;
     }
+    public String toStringCSV()
+    {
+        String s="";
+        s=s+this.getCodiceIdentificativo()+";"+this.getNome()+";"+this.getCognome()+";"+this.getCorso()+";";
+        return s;
+    }
     
 }

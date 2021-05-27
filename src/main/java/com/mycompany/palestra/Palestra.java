@@ -18,6 +18,7 @@ public class Palestra
 {
     private Cliente[] clienti;
     private static int N_MAX_CLIENTI=1500;
+    private int numClienti;
     //costruttore
     public Palestra()
      {
@@ -144,7 +145,7 @@ public class Palestra
      */
     public int rimuoviCliente(int codiceDaEliminare)
     {
-        for(int i=0;i<getNumClienti();i++)
+        for(int i=0;i<clienti.length;i++)
         {
             if(clienti[i]!=null)
             {
@@ -164,11 +165,12 @@ public class Palestra
      */
     public void aggiornaPosizioneClienti(int posizione)
     {
-        for (int i=posizione;i<getNumClienti();i++)
+        for (int i=posizione;i<getNumClienti()-2;i++)
         {
-            clienti[posizione]=clienti[posizione+1];
+            clienti[i]=clienti[i+1];
         }
-    }        
+
+    }   
     /**
      * visualizzaClienti: visualizza tutti i clienti dell'array
      *
@@ -210,6 +212,38 @@ public class Palestra
             }
         }
         return s;
+    }
+     public void esportaCSV() throws fileExeption
+    {
+        //PER VEDERE SE NON CI SONO PRENOTAZIONI
+        //METTI GETTER DEL TUO ARRAY
+        if(this.getNumClienti()==0)
+            return;
+        
+        String nomeFile="archivio.csv";
+        //prova scirttura
+        try 
+        {
+            //IDEM QUA
+            TextFile f1 = new TextFile(nomeFile,'W');
+            for(int i=0;i<this.clienti.length;i++)
+            {
+                if(clienti[i]!=null)
+                {
+                    f1.toFile(clienti[i].toStringCSV());               
+                }
+            }
+            f1.close();
+            System.out.println("Dati esportati correttamente");
+        } 
+        catch (IOException e1) 
+        {
+            System.out.println("Impossibile accedere al file");
+        } 
+        catch (fileExeption ex) 
+        {
+            System.out.println("Impossibile accedere al file");
+        } 
     }
     /**
      * visualizzaCorsoCliente, visualizza i clienti iscritti ad un determinato coros

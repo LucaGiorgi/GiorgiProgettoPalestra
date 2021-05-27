@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class Main
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws fileExeption
     {
         int sceltaUtente =-1;
         int CodiceIdentificativo=0;
@@ -114,8 +114,8 @@ public class Main
                 case 6:
                 {
                     //csv
-                    System.out.println("premi un pulsante per continuare.!");
-                    tastiera.nextLine();
+                    System.out.println("sto esportando i dati in CSV");
+                    p1.esportaCSV();
                     break;
                 }
                 case 0:
